@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Clicker Game</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      margin-top: 50px;
+    }
+    #clicker {
+      width: 150px;
+      height: 150px;
+      cursor: pointer;
+    }
+    .upgrade {
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Clicker Game</h1>
+  <img id="clicker" src="lebron.png" alt="Click Me">
+  <p>Score: <span id="score">0</span></p>
+
+  <div class="upgrade">
+    <button id="caleb">Buy Caleb (+1 per click) - Cost: 100</button>
+  </div>
+  <div class="upgrade">
+    <button id="king">Buy King (+1 per second) - Cost: 500</button>
+  </div>
+  <div class="upgrade">
+    <button id="connie">Buy Connie Poo (+100 instantly) - Cost: 1000</button>
+  </div>
+  <div class="upgrade">
+    <button id="shane">Buy Shane's Aura (+10,000 instantly) - Cost: 10000</button>
+  </div>
+
+  <audio id="clickSound" src="lebron.mp3"></audio>
+
+  <script>
+    let score = 0;
+    let pointsPerClick = 1;
+    let pointsPerSecond = 0;
+
+    let calebCost = 100;
+    let kingCost = 500;
+    let connieCost = 1000;
+    let shaneCost = 10000;
+
+    const scoreDisplay = document.getElementById('score');
+    const clicker = document.getElementById('clicker');
+    const clickSound = document.getElementById('clickSound');
+
+    clicker.addEventListener('click', () => {
+      score += pointsPerClick;
+      scoreDisplay.textContent = score;
+      clickSound.play();
+    });
+
+    document.getElementById('caleb').addEventListener('click', () => {
+      if (score >= calebCost) {
+        score -= calebCost;
+        pointsPerClick += 1;
+        calebCost = Math.floor(calebCost * 1.5);
+        document.getElementById('caleb').textContent = `Buy Caleb (+1 per click) - Cost: ${calebCost}`;
+        scoreDisplay.textContent = score;
+      }
+    });
+
+    document.getElementById('king').addEventListener('click', () => {
+      if (score >= kingCost) {
+        score -= kingCost;
+        pointsPerSecond += 1;
+        kingCost = Math.floor(kingCost * 1.5);
+        document.getElementById('king').textContent = `Buy King (+1 per second) - Cost: ${kingCost}`;
+        scoreDisplay.textContent = score;
+      }
+    });
+
+    document.getElementById('connie').addEventListener('click', () => {
+      if (score >= connieCost) {
+        score -= connieCost;
+        score += 100;
+        connieCost = Math.floor(connieCost * 1.5);
+        document.getElementById('connie').textContent = `Buy Connie Poo (+100 instantly) - Cost: ${connieCost}`;
+        scoreDisplay.textContent = score;
+      }
+    });
+
+    document.getElementById('shane').addEventListener('click', () => {
+      if (score >= shaneCost) {
+        score -= shaneCost;
+        score += 10000;
+        shaneCost = Math.floor(shaneCost * 1.5);
+        document.getElementById('shane').textContent = `Buy Shane's Aura (+10,000 instantly) - Cost: ${shaneCost}`;
+        scoreDisplay.textContent = score;
+      }
+    });
+
+    // Passive income
+    setInterval(() => {
+      score += pointsPerSecond;
+      scoreDisplay.textContent = score;
+    }, 1000);
+  </script>
+
+</body>
+</html>
